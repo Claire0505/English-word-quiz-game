@@ -1,0 +1,1 @@
+{'apple': '蘋果', 'banana': '香蕉', 'orange': '橘子', 'watermelon': '西瓜', 'kiwi': '奇異果'}
