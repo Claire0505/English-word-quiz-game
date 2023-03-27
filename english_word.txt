@@ -4,6 +4,6 @@
   "tomato": "番茄",
   "papaya": "木瓜",
   "peach": "桃子",
-  "kiwi": "奇異果",
-  "apple": "蘋果"
+  "apple": "蘋果",
+  "pear": "梨子"
 }

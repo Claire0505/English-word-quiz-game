@@ -5,6 +5,8 @@ import pandas as pd
 import datetime
 
 # 讀取英文單字檔案，沒有就建立新字典檔案
+
+
 def load_words():
     try:
         with open("english_word.txt", "r", encoding="utf-8") as f:
@@ -21,6 +23,8 @@ def load_words():
             return word_dict
 
 # 新增單字
+
+
 def add_word():
     # 檢查輸入的字是否為英文字母或中文字
     while True:
@@ -74,16 +78,18 @@ def add_word():
                 else:
                     print("無效的選擇，只能選擇 y 或 n")
             except:
-               print("無效的選擇，只能選擇 y 或 n")  
+                print("無效的選擇，只能選擇 y 或 n")
 
 # 查看目前所有英文單字
+
+
 def query_word():
     with open("english_word.txt", "r", encoding="utf-8") as f:
         word_dict = json.load(f)
     # 創建 DataFrame
     eng_col = "%-10s" % "英文單字"
     chi_col = "%-10s" % "中文單字"
-    df = pd.DataFrame(list(word_dict.items()), columns = [eng_col, chi_col])
+    df = pd.DataFrame(list(word_dict.items()), columns=[eng_col, chi_col])
     # 要讓顯示資料都可以對齊
     # 使用 ljust 函數將每個英文單字向左靠齊，使其寬度一致。max_word_length 變數則儲存最長英文單字的長度
     max_word_length = max(df[eng_col].apply(len))
@@ -92,7 +98,7 @@ def query_word():
     max_word_length = max(df[chi_col].apply(len))
     df[chi_col] = df[chi_col].apply(lambda x: x.ljust(max_word_length))
     print(df)
-         
+
     choice = input("\n 請選擇: 1.刪除英文單字 2.匯出成 Excel 3.離開回到選單:  ")
     if choice == "1":
         while True:
@@ -109,34 +115,37 @@ def query_word():
                     json.dump(word_dict, f, ensure_ascii=False, indent=2)
                 return
     elif choice == "2":
-         filename = "english_word_" + datetime.datetime.now().strftime("%Y%m%d_%H%M%S") + ".xlsx"
-         # 將 Json 轉為 DataFrame
-         df = pd.json_normalize(word_dict)
-         # 將 DataFrame 垂直排列
-         df_vertical = df.T.reset_index()
-         # 設定新的欄位名稱
-         df_vertical.columns = ['英文單字', '中文單字']
-         # 將 DataFrame 儲存為 Excel 檔案
-         df_vertical.to_excel(filename, index= False)
-         print("將資料匯出成 Excel 檔案!!")
+        filename = "english_word_" + \
+            datetime.datetime.now().strftime("%Y%m%d_%H%M%S") + ".xlsx"
+        # 將 Json 轉為 DataFrame
+        df = pd.json_normalize(word_dict)
+        # 將 DataFrame 垂直排列
+        df_vertical = df.T.reset_index()
+        # 設定新的欄位名稱
+        df_vertical.columns = ['英文單字', '中文單字']
+        # 將 DataFrame 儲存為 Excel 檔案
+        df_vertical.to_excel(filename, index=False)
+        print("將資料匯出成 Excel 檔案!!")
     elif choice == "3":
         return  # 結束返回主選單
     else:
         return query_word()
-          
+
 # 猜英文單字遊戲
+
+
 def english_word_quiz():
     print("英文單字測驗，每回測驗共有五題,每題最多有三次機會回答")
     words = load_words()
     score = 0
-    used_words = [] # 儲存已使用過的單字
+    used_words = []  # 儲存已使用過的單字
     # 每回測驗共有五題
     for i in range(5):
         # 從字典中隨機選擇一個尚未使用過的單字
         # 將出現過的單字從字典中刪除，避免重複出現
         word = random.choice(list(set(words.keys()) - set(used_words)))
         used_words.append(word)
-        print(f"\n第{i+1}題,請回答正確單字的英文單字")
+        print(f"\n第{i+1}題,請回答正確的英文單字")
         quiz = word
         # 每題最多可回答三次
         # 初始提示字母數量為0
@@ -174,14 +183,14 @@ def english_word_quiz():
             elif choice.lower() == "n":
                 return   # 結束返回主選單
         except:
-             print("無效的選擇，只能選擇 y 或 n")
+            print("無效的選擇，只能選擇 y 或 n")
 
 # 主程式:選擇項目
 def main():
     # 程式一開始會先讀取英文單字檔案，沒有就建立新字典檔案
     load_words()
 
-    print("<<< 歡迎來到英文單字測驗遊戲，請選擇要執行的項目： >>>")
+    print("\n<<< 歡迎來到英文單字測驗遊戲,請選擇要執行的項目： >>>")
     print("1. 新增單字")
     print("2. 查看所有單字/刪除單字/匯出成 Excel")
     print("3. 英文單字測驗遊戲")
@@ -193,7 +202,7 @@ def main():
         if choice == "1":
             add_word()  # 新增單字
         elif choice == "2":
-            query_word() # 查詢單字/刪除單字/匯出成 Excel
+            query_word()  # 查詢單字/刪除單字/匯出成 Excel
         elif choice == "3":
             english_word_quiz()  # 單字測驗
         elif choice == "4":
