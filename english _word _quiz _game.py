@@ -5,8 +5,6 @@ import pandas as pd
 import datetime
 
 # 讀取英文單字檔案，沒有就建立新字典檔案
-
-
 def load_words():
     try:
         with open("english_word.txt", "r", encoding="utf-8") as f:
@@ -23,8 +21,6 @@ def load_words():
             return word_dict
 
 # 新增單字
-
-
 def add_word():
     # 檢查輸入的字是否為英文字母或中文字
     while True:
@@ -81,8 +77,6 @@ def add_word():
                 print("無效的選擇，只能選擇 y 或 n")
 
 # 查看目前所有英文單字
-
-
 def query_word():
     with open("english_word.txt", "r", encoding="utf-8") as f:
         word_dict = json.load(f)
@@ -132,8 +126,6 @@ def query_word():
         return query_word()
 
 # 猜英文單字遊戲
-
-
 def english_word_quiz():
     print("英文單字測驗，每回測驗共有五題,每題最多有三次機會回答")
     words = load_words()
